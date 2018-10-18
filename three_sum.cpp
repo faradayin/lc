@@ -6,6 +6,7 @@
  * 另外一个重要的地方：要注意边界！尤其是跳过相同值时，要考虑到，不能超过数组边界，且要时刻保证front<back
 */
 #include <vector>
+#include <set>
 #include <algorithm>
 #include <iostream>
 
@@ -14,57 +15,91 @@ using namespace std;
 vector<vector<int>> threeSum(vector<int> &nums)
 {
     vector<vector<int>> r;
-    if(nums.size()<3) return r;
+    if (nums.size() < 3)
+        return r;
     sort(nums.begin(), nums.end());
-    
-    for (size_t n1 = 0; n1 < nums.size()-2;)
+
+    for (size_t n1 = 0; n1 < nums.size() - 2;)
     {
-        
+
         size_t n2 = n1 + 1;
         size_t n3 = nums.size() - 1;
-        
+
         while (n2 < n3)
         {
             if (nums[n1] + nums[n2] + nums[n3] == 0)
             {
                 r.push_back(vector<int>({nums[n1], nums[n2], nums[n3]}));
                 n2++;
-                while(n2<n3 && nums[n2] == nums[n2 - 1]) n2++;
+                while (n2 < n3 && nums[n2] == nums[n2 - 1])
+                    n2++;
                 n3--;
-                while (n2<n3 && nums[n3] == nums[n3 + 1]) n3--;
-
+                while (n2 < n3 && nums[n3] == nums[n3 + 1])
+                    n3--;
             }
-                
 
             else if ((nums[n1] + nums[n2] + nums[n3]) < 0)
             {
-                 n2++;
-                 while(n2<n3 && nums[n2] == nums[n2 - 1]) n2++;
-            }   
-                
+                n2++;
+                while (n2 < n3 && nums[n2] == nums[n2 - 1])
+                    n2++;
+            }
+
             else
             {
                 n3--;
-                 while(n2<n3 && nums[n3] == nums[n3 + 1]) n3--;
+                while (n2 < n3 && nums[n3] == nums[n3 + 1])
+                    n3--;
             }
-                
-
         }
         n1++;
-        while(n1<nums.size()-2 && nums[n1] == nums[n1-1]) n1++;
-       
+        while (n1 < nums.size() - 2 && nums[n1] == nums[n1 - 1])
+            n1++;
     }
     return r;
 }
 
+//也可以用set<vector<int>>来避免重复
+vector<vector<int>> three_Sum(vector<int> &nums)
+{
+    set<vector<int>> res;
+    sort(nums.begin(), nums.end());
+    if (!nums.empty() && nums.back() < 0)
+        return {};
+    for (int k = 0; k < nums.size(); ++k)
+    {
+        if (nums[k] > 0)
+            break;
+        int target = 0 - nums[k];
+        int i = k + 1, j = nums.size() - 1;
+        while (i < j)
+        {
+            if (nums[i] + nums[j] == target)
+            {
+                res.insert({nums[k], nums[i], nums[j]});
+                while (i < j && nums[i] == nums[i + 1])
+                    ++i;
+                while (i < j && nums[j] == nums[j - 1])
+                    --j;
+                ++i;
+                --j;
+            }
+            else if (nums[i] + nums[j] < target)
+                ++i;
+            else
+                --j;
+        }
+    }
+    return vector<vector<int>>(res.begin(), res.end());
+}
 int main()
 {
     vector<int> t = {-1, 0, 1, 2, -1, -4};
-    auto r = threeSum(t);
-    for(auto &ele: r)
+    auto r = three_Sum(t);
+    for (auto &ele : r)
     {
-        for(auto &n:ele)
-            cout<< n<<'\t';
-        cout<<endl;
+        for (auto &n : ele)
+            cout << n << '\t';
+        cout << endl;
     }
 }

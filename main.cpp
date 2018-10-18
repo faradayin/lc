@@ -29,7 +29,7 @@ bool isPalindrome(int x)
 
 int main()
 {
-    int num = 121;
+    int num = 121121;
     
     cout << (isPalindrome(num)? "yes": "no") << endl;
 

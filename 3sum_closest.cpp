@@ -1,3 +1,8 @@
+/**解题思路：
+ * 类似于“three sum”，首先排序，然后固定first；second和third首位夹逼
+ * 比较简单
+*/
+
 int threeSumClosest(vector<int>& nums, int target)
 {
     sort(nums.begin(), nums.end());

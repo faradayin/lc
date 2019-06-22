@@ -31,7 +31,7 @@ public:
             {
                 return {i, m[target - nums[i]]};
             }
-            m[nums[i]] = i;//如果表中没找到另一个，另一个会找到该项
+            m[nums[i]] = i;//如果哈希表中没找到另一个，另一个会找到该项
         }
         return {};
     }

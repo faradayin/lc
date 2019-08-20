@@ -1,7 +1,7 @@
 class Solution {
 public:
     vector<int> diffWaysToCompute(string input) {
-        vector<int> output;
+        vector<int> output;//返回计算结果
         for(int i=0; i<input.size(); i++)
         {
             char c=input[i];

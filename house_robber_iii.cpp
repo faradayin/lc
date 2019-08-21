@@ -17,9 +17,9 @@ public:
             return 0;
         int val0 = root->val;
         if (root->left)
-            val0 += rob(root->left->left) + rob(root->left->right);
+            val0 += (rob(root->left->left) + rob(root->left->right));
         if (root->right)
-            val0 += rob(root->right->left) + rob(root->right->right);
+            val0 += (rob(root->right->left) + rob(root->right->right));
         int val1 = rob(root->left) + rob(root->right);
         return max(val0, val1);
     }

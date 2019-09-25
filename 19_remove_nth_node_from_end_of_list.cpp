@@ -27,3 +27,26 @@ ListNode* removeNthFromEnd(ListNode* head, int n)
 }
 
 };
+
+//双指针法,前面一个领先n步
+class Solution 
+{
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) 
+    {
+        ListNode* h = head;
+        ListNode* t = head;
+        ListNode* l = nullptr;
+        while(--n) t = t->next;
+        while(t->next) 
+        {
+            l = h;
+            h = h->next;
+            t = t->next;
+        }
+        if(l == nullptr) return h->next;
+        l->next = h->next;
+        return head;
+    }
+
+};

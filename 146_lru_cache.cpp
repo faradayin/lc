@@ -13,6 +13,9 @@ private:
     
     void updateLRU(int key)
     {
+        //这里要考虑两种情况
+        // 1️⃣key已经存在
+        // 2️⃣key是新插入
         if(ma.count(key)) que.erase(mp[key]);
         que.push_front(key);
         mp[key] = que.begin();
@@ -36,8 +39,9 @@ public:
     
     void put(int key, int value) 
     {
+        //已满且容器里没有待添加的key,则调用dump()
         if(ma.size() == size && ma.count(key) == 0) dump();
-        ma[key] = value;
         updateLRU(key);
+        ma[key] = value;
     }
 };
